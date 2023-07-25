@@ -3,7 +3,8 @@
 
 using namespace std;
 
-void selectionSort() {
+void propioSort() {
+
     unsigned t0,t1;
     t0 = clock();
 
@@ -12,31 +13,48 @@ void selectionSort() {
 
     int aux;
     int posMin;
+    int posMax;
+    int posFinal;
+    posFinal = size - 1;
 
-    cout << endl;
-    for (int i = 0; i < size; i++) cout << v[i] << " ";
-
-    for(int i = 0; i < size; i++){
+    for (int i = 0; i < size / 2; i++) {
         posMin = i;
-        for(int j = i + 1; j < size; j++){
-            if (v[posMin]>v[j]) posMin = j;
-        }
-        aux = v[i];
-        v[i] = v[posMin];
-        v[posMin] = aux;
+        posMax = i;
 
+        for (int j = i; j < posFinal; j++) {
+            if (v[j] > v[posMax]) {
+                posMax = j;
+            }
+
+            if (v[j] < v[posMin]) {
+                posMin = j;
+            }
+        }
         
+        aux = v[posMin];
+        v[posMin] = v[i];
+        v[i] = aux;
+
+        if (posMax == i) {
+            posMax = posMin;
+        }
+
+        aux = v[posFinal];
+        v[posFinal] = v[posMax];
+        v[posMax] = aux;
+
+        posFinal--;
+
     }
     
-
     cout << endl;
     for (int i = 0; i < size; i++) cout << v[i] << " ";
 
     t1 = clock();
 
-    cout << "TIEMPO seleccion: " << double(t1 - t0) / CLOCKS_PER_SEC;
+    cout << "TIEMPO: " << double(t1 - t0) / CLOCKS_PER_SEC;
 }
 
 int main(){
-    selectionSort();
+    propioSort();
 }
